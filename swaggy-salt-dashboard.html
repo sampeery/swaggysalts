@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swaggy Salt 🧂</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Lilita+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #b8e0f7;
+    --sky-light: #d6eef9;
+    --navy: #1a2f5e;
+    --navy-light: #2a4080;
+    --white: #ffffff;
+    --green: #4caf7d;
+    --yellow: #f5a623;
+    --red: #e53935;
+    --card-bg: rgba(255,255,255,0.85);
+    --shadow: 0 4px 20px rgba(26,47,94,0.13);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--sky);
+    min-height: 100vh;
+    color: var(--navy);
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: var(--navy);
+    padding: 14px 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 3px 15px rgba(26,47,94,0.3);
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .mascot-svg {
+    width: 48px;
+    height: 48px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+    animation: bounce 2.5s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+
+  header h1 {
+    font-family: 'Lilita One', cursive;
+    color: var(--white);
+    font-size: 1.7rem;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  }
+
+  header h1 span { color: var(--sky); }
+
+  /* ===== NAV TABS ===== */
+  nav {
+    display: flex;
+    width: 100%;
+    gap: 2px;
+  }
+
+  nav button {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    padding: 10px 4px;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  nav button.active {
+    background: var(--sky);
+    color: var(--navy);
+  }
+
+  nav button:hover:not(.active) {
+    background: rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  main {
+    padding: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+    border: 2px solid rgba(255,255,255,0.7);
+    backdrop-filter: blur(6px);
+  }
+
+  .card-title {
+    font-family: 'Lilita One', cursive;
+    font-size: 1.1rem;
+    color: var(--navy);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ===== CUSTOMER CARDS ===== */
+  .customer-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+    border-left: 5px solid var(--green);
+    position: relative;
+    transition: transform 0.15s;
+  }
+
+  .customer-card:active { transform: scale(0.98); }
+  .customer-card.yellow { border-left-color: var(--yellow); }
+  .customer-card.red { border-left-color: var(--red); }
+
+  .customer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .customer-name {
+    font-weight: 900;
+    font-size: 1.05rem;
+    color: var(--navy);
+  }
+
+  .customer-address {
+    font-size: 0.78rem;
+    color: #5a7a9a;
+    margin-top: 1px;
+  }
+
+  .countdown-badge {
+    background: var(--green);
+    color: white;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .countdown-badge.yellow { background: var(--yellow); }
+  .countdown-badge.red { background: var(--red); }
+
+  .customer-details {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .detail-chip {
+    background: var(--sky-light);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.73rem;
+    font-weight: 700;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .progress-bar-wrap {
+    background: #dcedf7;
+    border-radius: 20px;
+    height: 8px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    border-radius: 20px;
+    background: var(--green);
+    transition: width 0.5s ease;
+  }
+
+  .progress-bar.yellow { background: var(--yellow); }
+  .progress-bar.red { background: var(--red); }
+
+  .customer-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .btn {
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-primary {
+    background: var(--navy);
+    color: white;
+    flex: 1;
+  }
+
+  .btn-primary:active { background: var(--navy-light); transform: scale(0.97); }
+
+  .btn-secondary {
+    background: var(--sky);
+    color: var(--navy);
+  }
+
+  .btn-danger {
+    background: #fdecea;
+    color: var(--red);
+  }
+
+  .btn-success {
+    background: #e8f5ee;
+    color: var(--green);
+    flex: 1;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,47,94,0.5);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--sky-light);
+    border-radius: 24px 24px 0 0;
+    padding: 24px 20px 32px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .modal-title {
+    font-family: 'Lilita One', cursive;
+    font-size: 1.3rem;
+    color: var(--navy);
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  /* ===== FORM ===== */
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  label {
+    display: block;
+    font-weight: 800;
+    font-size: 0.82rem;
+    color: var(--navy);
+    margin-bottom: 5px;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    border: 2px solid rgba(26,47,94,0.15);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    background: white;
+    color: var(--navy);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--navy);
+  }
+
+  textarea { resize: vertical; min-height: 70px; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* ===== SUMMARY STATS ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .stat-box {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 12px 8px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .stat-num {
+    font-family: 'Lilita One', cursive;
+    font-size: 1.6rem;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #5a7a9a;
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== ROUTE TAB ===== */
+  .route-stop {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow);
+  }
+
+  .stop-num {
+    background: var(--navy);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .stop-info { flex: 1; }
+  .stop-name { font-weight: 800; font-size: 0.95rem; }
+  .stop-addr { font-size: 0.75rem; color: #5a7a9a; }
+  .stop-bags {
+    background: var(--sky);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--navy);
+  }
+
+  .route-summary {
+    background: var(--navy);
+    color: white;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .route-summary-label { font-size: 0.8rem; opacity: 0.8; }
+  .route-summary-num {
+    font-family: 'Lilita One', cursive;
+    font-size: 1.8rem;
+  }
+
+  .btn-maps {
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    width: 100%;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.15s;
+  }
+
+  .btn-maps:active { transform: scale(0.97); }
+
+  .route-checkbox-list { margin-bottom: 14px; }
+  .route-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 6px;
+    box-shadow: var(--shadow);
+  }
+
+  .route-checkbox-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--navy);
+    flex-shrink: 0;
+  }
+
+  /* ===== INVENTORY TAB ===== */
+  .inventory-big {
+    text-align: center;
+    padding: 20px 0 10px;
+  }
+
+  .inventory-count {
+    font-family: 'Lilita One', cursive;
+    font-size: 5rem;
+    color: var(--navy);
+    line-height: 1;
+  }
+
+  .inventory-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #5a7a9a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  .inventory-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  .inv-btn {
+    background: var(--navy);
+    color: white;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    font-weight: 900;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s;
+  }
+
+  .inv-btn:active { transform: scale(0.9); }
+
+  .inv-count-display {
+    font-family: 'Lilita One', cursive;
+    font-size: 2.5rem;
+    color: var(--navy);
+    min-width: 60px;
+    text-align: center;
+  }
+
+  /* ===== INCOME TAB ===== */
+  .income-stat {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .income-stat-label {
+    font-weight: 800;
+    color: #5a7a9a;
+    font-size: 0.85rem;
+  }
+
+  .income-stat-value {
+    font-family: 'Lilita One', cursive;
+    font-size: 1.6rem;
+    color: var(--navy);
+  }
+
+  .income-stat-value.green { color: var(--green); }
+  .income-stat-value.red { color: var(--red); }
+
+  .log-entry {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .log-entry-left { flex: 1; }
+  .log-name { font-weight: 800; font-size: 0.92rem; }
+  .log-date { font-size: 0.73rem; color: #5a7a9a; }
+  .log-amount {
+    font-family: 'Lilita One', cursive;
+    font-size: 1.1rem;
+    color: var(--green);
+  }
+
+  /* ===== FAB ===== */
+  .fab {
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    font-size: 1.6rem;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(26,47,94,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 150;
+    transition: transform 0.2s;
+  }
+
+  .fab:active { transform: scale(0.92); }
+
+  /* ===== PHOTO UPLOAD ===== */
+  .photo-preview {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 8px;
+    display: none;
+  }
+
+  /* ===== SECTION HEADERS ===== */
+  .section-header {
+    font-family: 'Lilita One', cursive;
+    font-size: 1rem;
+    color: var(--navy);
+    margin: 16px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ===== COST SETTINGS ===== */
+  .cost-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    box-shadow: var(--shadow);
+  }
+
+  .cost-row label {
+    flex: 1;
+    margin: 0;
+    font-size: 0.85rem;
+  }
+
+  .cost-row input {
+    width: 90px;
+    text-align: center;
+    font-weight: 800;
+  }
+
+  /* ===== NOTES SECTION ===== */
+  .notes-display {
+    font-size: 0.8rem;
+    color: #5a7a9a;
+    font-style: italic;
+    margin-top: 6px;
+  }
+
+  .delete-confirm {
+    background: #fdecea;
+    border: 2px solid var(--red);
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.85rem;
+    display: none;
+  }
+
+  /* ===== EMPTY STATE ===== */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #5a7a9a;
+  }
+
+  .empty-state .empty-icon { font-size: 3rem; margin-bottom: 10px; }
+  .empty-state p { font-weight: 700; font-size: 0.9rem; }
+
+  /* ===== VISIT LOG MODAL SPECIFIC ===== */
+  .visit-log-section {
+    margin-top: 14px;
+    border-top: 2px dashed rgba(26,47,94,0.15);
+    padding-top: 14px;
+  }
+
+  .visit-log-entry {
+    background: white;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    font-size: 0.82rem;
+  }
+
+  .visit-log-date { font-weight: 800; color: var(--navy); }
+  .visit-log-detail { color: #5a7a9a; margin-top: 2px; }
+  .visit-photo-thumb {
+    width: 100%;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 6px;
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <!-- Mascot SVG (salt cube with sunglasses + peace sign) -->
+    <svg class="mascot-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Body -->
+      <rect x="15" y="25" width="65" height="60" rx="14" fill="white" stroke="#1a2f5e" stroke-width="3"/>
+      <!-- Face smile -->
+      <path d="M35 65 Q50 78 65 65" stroke="#1a2f5e" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- Sunglasses frame -->
+      <rect x="22" y="42" width="22" height="14" rx="5" fill="#1a2f5e"/>
+      <rect x="56" y="42" width="22" height="14" rx="5" fill="#1a2f5e"/>
+      <line x1="44" y1="49" x2="56" y2="49" stroke="#1a2f5e" stroke-width="2.5"/>
+      <!-- Lens shine -->
+      <rect x="25" y="44" width="7" height="5" rx="2" fill="#4a7fcc" opacity="0.7"/>
+      <rect x="59" y="44" width="7" height="5" rx="2" fill="#4a7fcc" opacity="0.7"/>
+      <!-- Peace sign hand -->
+      <line x1="80" y1="38" x2="88" y2="22" stroke="#1a2f5e" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="80" y1="38" x2="91" y2="28" stroke="#1a2f5e" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="80" y1="38" x2="84" y2="52" stroke="#1a2f5e" stroke-width="2.5" stroke-linecap="round"/>
+      <ellipse cx="80" cy="38" rx="6" ry="7" fill="white" stroke="#1a2f5e" stroke-width="2.5"/>
+    </svg>
+    <h1>SWAGGY <span>SALT</span> 🧂</h1>
+  </div>
+  <nav>
+    <button class="active" onclick="showTab('dashboard')">Dashboard</button>
+    <button onclick="showTab('route')">Route</button>
+    <button onclick="showTab('inventory')">Inventory</button>
+    <button onclick="showTab('income')">Income</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ===== DASHBOARD TAB ===== -->
+  <div id="tab-dashboard" class="tab-content active">
+    <div class="stats-grid" id="stats-grid"></div>
+    <div class="section-header">🔴 Overdue</div>
+    <div id="customers-red"></div>
+    <div class="section-header">🟡 Coming Up Soon</div>
+    <div id="customers-yellow"></div>
+    <div class="section-header">🟢 All Good</div>
+    <div id="customers-green"></div>
+  </div>
+
+  <!-- ===== ROUTE TAB ===== -->
+  <div id="tab-route" class="tab-content">
+    <div class="card">
+      <div class="card-title">📋 Select Stops for This Route</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <button class="btn btn-secondary" style="flex:1;font-size:0.8rem" onclick="autoSelectDue()">Auto-select Due Customers</button>
+        <button class="btn btn-secondary" style="font-size:0.8rem" onclick="selectAll()">All</button>
+        <button class="btn btn-secondary" style="font-size:0.8rem" onclick="selectNone()">None</button>
+      </div>
+      <div class="route-checkbox-list" id="route-checklist"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="buildRoute()">Build Route →</button>
+    </div>
+    <div id="route-result" style="display:none">
+      <div class="route-summary" id="route-summary-box"></div>
+      <button class="btn-maps" onclick="openMaps()">📍 Open in Maps</button>
+      <div id="route-stops-list"></div>
+    </div>
+  </div>
+
+  <!-- ===== INVENTORY TAB ===== -->
+  <div id="tab-inventory" class="tab-content">
+    <div class="card">
+      <div class="card-title">📦 Bags in Storage</div>
+      <div class="inventory-big">
+        <div class="inventory-count" id="inv-count-display">0</div>
+        <div class="inventory-label">Bags Currently at Mom's</div>
+      </div>
+      <div class="inventory-controls">
+        <button class="inv-btn" onclick="adjustInventory(-1)">−</button>
+        <div style="text-align:center">
+          <input type="number" id="inv-adjust-input" placeholder="Set amount" style="width:110px;text-align:center;font-size:1rem;">
+        </div>
+        <button class="inv-btn" onclick="adjustInventory(1)">+</button>
+      </div>
+      <button class="btn btn-primary" style="width:100%" onclick="setInventoryManual()">Set Amount</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Upcoming Needs</div>
+      <div id="upcoming-needs"></div>
+      <div style="margin-top:12px;padding-top:12px;border-top:2px dashed rgba(26,47,94,0.15)">
+        <div id="buy-recommendation" style="font-weight:800;font-size:0.9rem;color:var(--navy);text-align:center;"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚙️ Cost Settings</div>
+      <div class="cost-row">
+        <label>Your cost per bag ($)</label>
+        <input type="number" id="cost-per-bag" value="5.50" step="0.01" min="0" onchange="saveCostSettings()">
+      </div>
+      <div class="cost-row">
+        <label>Charge per bag ($)</label>
+        <input type="number" id="charge-per-bag" value="10.00" step="0.01" min="0" onchange="saveCostSettings()">
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== INCOME TAB ===== -->
+  <div id="tab-income" class="tab-content">
+
+    <div class="section-header">📝 Log a Service Visit</div>
+    <div class="card">
+      <div class="form-group">
+        <label>Customer</label>
+        <select id="income-customer-select"></select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Bags Delivered</label>
+          <input type="number" id="income-bags" placeholder="e.g. 2" min="1" oninput="autoFillPayment()">
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="income-date">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Amount Paid by Customer ($)</label>
+          <input type="number" id="income-paid" placeholder="e.g. 20.00" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select id="income-pay-method">
+            <option value="Venmo">Venmo</option>
+            <option value="Cash">Cash</option>
+            <option value="Zelle">Zelle</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%" onclick="logVisit()">Log Visit ✓</button>
+    </div>
+
+    <div class="section-header">🧾 Log an Expense</div>
+    <div class="card">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" id="exp-desc" placeholder="e.g. Walmart bags">
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="exp-date">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Bags Purchased</label>
+          <input type="number" id="exp-bags" placeholder="e.g. 10" min="0" oninput="autoFillExpense()">
+        </div>
+        <div class="form-group">
+          <label>Total Amount Spent ($)</label>
+          <input type="number" id="exp-amount" placeholder="e.g. 55.00" min="0" step="0.01">
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;background:var(--red)" onclick="logExpense()">Log Expense ✓</button>
+    </div>
+
+    <div class="section-header">📊 Income Statement</div>
+    <div class="card" id="income-statement"></div>
+
+    <div class="section-header">🗓️ Visit History</div>
+    <div id="visit-history-list"></div>
+
+    <div class="section-header">🧾 Expense History</div>
+    <div id="expense-history-list"></div>
+
+  </div>
+
+</main>
+
+<!-- FAB: Add Customer -->
+<button class="fab" id="fab-btn" onclick="openAddCustomer()" title="Add Customer">+</button>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Add/Edit Customer Modal -->
+<div class="modal-overlay" id="customer-modal">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="modal-title-text">➕ Add Customer</span>
+      <button class="modal-close" onclick="closeModal('customer-modal')">✕</button>
+    </div>
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="c-name" placeholder="Jane Smith">
+    </div>
+    <div class="form-group">
+      <label>Address</label>
+      <input type="text" id="c-address" placeholder="123 Main St, Sandy UT">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Service Interval (days)</label>
+        <input type="number" id="c-interval" placeholder="60" min="1">
+      </div>
+      <div class="form-group">
+        <label>Bags per Visit</label>
+        <input type="number" id="c-bags" placeholder="2" min="1">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Last Filled Date</label>
+      <input type="date" id="c-last-filled">
+    </div>
+    <div class="form-group">
+      <label>Payment Method</label>
+      <select id="c-payment">
+        <option value="Venmo">Venmo</option>
+        <option value="Cash">Cash</option>
+        <option value="Zelle">Zelle</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Softener Location</label>
+      <input type="text" id="c-softener-loc" placeholder="e.g. Garage, basement left side">
+    </div>
+    <div class="form-group">
+      <label>Gate Code / Access Notes</label>
+      <input type="text" id="c-gate" placeholder="e.g. Gate code: 1234">
+    </div>
+    <div class="form-group">
+      <label>Other Notes</label>
+      <textarea id="c-notes" placeholder="Dogs in yard, prefers morning visits, etc."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Last Visit Photo</label>
+      <input type="file" id="c-photo" accept="image/*" onchange="previewPhoto(this)">
+      <img id="c-photo-preview" class="photo-preview" alt="Visit photo">
+    </div>
+    <input type="hidden" id="c-editing-id">
+    <div style="display:flex;gap:10px;margin-top:8px">
+      <button class="btn btn-primary" style="flex:1" onclick="saveCustomer()">Save Customer ✓</button>
+      <button class="btn btn-danger" id="delete-btn" onclick="showDeleteConfirm()" style="display:none">🗑️</button>
+    </div>
+    <div class="delete-confirm" id="delete-confirm">
+      <p style="font-weight:800;margin-bottom:10px">Delete this customer? This can't be undone.</p>
+      <div style="display:flex;gap:8px;justify-content:center">
+        <button class="btn btn-danger" onclick="deleteCustomer()">Yes, Delete</button>
+        <button class="btn btn-secondary" onclick="hideDeleteConfirm()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Customer Detail Modal -->
+<div class="modal-overlay" id="detail-modal">
+  <div class="modal">
+    <div class="modal-title">
+      <span id="detail-name">Customer</span>
+      <button class="modal-close" onclick="closeModal('detail-modal')">✕</button>
+    </div>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+// Approximate coords for proximity sorting from Mom's house (11 Snow Forest Ln, Sandy UT)
+// lat/lng used only for distance sorting — not displayed
+const MOM_LAT = 40.5712, MOM_LNG = -111.8018;
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 3958.8, dLat = (lat2-lat1)*Math.PI/180, dLng = (lng2-lng1)*Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+const defaultCustomers = [
+  // Snow Forest Lane cluster — essentially next door to Mom
+  { id: '5',  name: 'Randy Goggins',       address: '1 Snow Forest Lane, Sandy UT',          interval: 120, bags: 5, lastFilled: '2026-04-11', payment: 'Venmo', softenerLoc: '', gate: '', notes: '', photoData: null, lat: 40.5710, lng: -111.8020 },
+  { id: '8',  name: 'Jordan Perry',         address: '12 Snow Forest Ln, Sandy UT',            interval: 150, bags: 2, lastFilled: '2026-03-19', payment: 'Venmo', softenerLoc: '', gate: '', notes: 'Unsure on bag count — verify on first visit', photoData: null, lat: 40.5714, lng: -111.8016 },
+  { id: '3',  name: 'Christopher Thompson', address: '9 Snow Forest Cove, Sandy UT',           interval: 30,  bags: 3, lastFilled: '2026-04-11', payment: 'Venmo', softenerLoc: '', gate: '', notes: '', photoData: null, lat: 40.5716, lng: -111.8014 },
+  { id: '9',  name: 'Maria Groves',         address: '2 Snow Forest Cove, Sandy UT',           interval: 60,  bags: 2, lastFilled: '2026-04-15', payment: 'Venmo', softenerLoc: '', gate: '', notes: '', photoData: null, lat: 40.5718, lng: -111.8012 },
+  // Lone Hollow cluster — nearby
+  { id: '6',  name: 'Bill Newell',          address: '5 Lone Hollow Drive, Sandy UT',          interval: 40,  bags: 1, lastFilled: '2026-04-15', payment: 'Venmo', softenerLoc: '', gate: '', notes: '', photoData: null, lat: 40.5695, lng: -111.8005 },
+  { id: '7',  name: 'Rob Clark',            address: '31 Lone Hollow Dr., Sandy UT',           interval: 60,  bags: 3, lastFilled: '2026-04-15', payment: 'Venmo', softenerLoc: '', gate: '', notes: '', photoData: null, lat: 40.5690, lng: -111.8000 },
+  // Bentwood/Bentbrook cluster
+  { id: '10', name: 'Brenda Reber',         address: '11 S. Bentwood Ln., Sandy UT',           interval: 120, bags: 4, lastFilled: '2026-01-28', payment: 'Venmo', softenerLoc: '', gate: '', notes: '', photoData: null, lat: 40.5680, lng: -111.7990 },
+  { id: '11', name: 'Karen Fitzpatrick',    address: '9 Bentbrook Lane, Sandy UT 84092',       interval: 120, bags: 3, lastFilled: '2026-03-07', payment: 'Venmo', softenerLoc: '', gate: '', notes: '', photoData: null, lat: 40.5675, lng: -111.7985 },
+  // Parkside / Old Oak — a bit further out
+  { id: '4',  name: 'Shandon Cole',         address: '4 Parkside Lane, Sandy UT',              interval: 90,  bags: 6, lastFilled: '2026-04-11', payment: 'Venmo', softenerLoc: '', gate: '', notes: '', photoData: null, lat: 40.5660, lng: -111.7970 },
+  { id: '2',  name: 'Luke Wiseman',         address: '5 Old Oak Ln, Sandy UT',                 interval: 60,  bags: 3, lastFilled: '2026-04-11', payment: 'Venmo', softenerLoc: '', gate: '', notes: '', photoData: null, lat: 40.5650, lng: -111.7960 },
+  // Duane Moss — cash customer, address unknown
+  { id: '12', name: 'Duane Moss',           address: '',                                        interval: 120, bags: 6, lastFilled: '2026-04-15', payment: 'Cash',  softenerLoc: '', gate: '', notes: 'Address missing — add when known', photoData: null, lat: 40.5640, lng: -111.7950 },
+  // Shane Peery — Orem, always last
+  { id: '1',  name: 'Shane Peery',          address: '696 South 900 East, Orem UT',            interval: 60,  bags: 4, lastFilled: '2025-12-15', payment: 'Venmo', softenerLoc: '', gate: '', notes: 'Outlier — Orem. Do this trip separately.', photoData: null, lat: 40.2969, lng: -111.6946 },
+];
+const DATA_VERSION = '2026-04-18-v2';
+if (!localStorage.getItem('swaggy_customers') || localStorage.getItem('swaggy_data_version') !== DATA_VERSION) {
+  localStorage.setItem('swaggy_customers', JSON.stringify(defaultCustomers));
+  localStorage.setItem('swaggy_data_version', DATA_VERSION);
+}
+let customers = JSON.parse(localStorage.getItem('swaggy_customers') || '[]');
+let visits = JSON.parse(localStorage.getItem('swaggy_visits') || '[]');
+let expenses = JSON.parse(localStorage.getItem('swaggy_expenses') || '[]');
+let inventory = parseInt(localStorage.getItem('swaggy_inventory') || '0');
+let costPerBag = parseFloat(localStorage.getItem('swaggy_cost') || '5.50');
+let chargePerBag = parseFloat(localStorage.getItem('swaggy_charge') || '10.00');
+let routeStops = [];
+let editingPhotoData = null;
+
+function save() {
+  localStorage.setItem('swaggy_customers', JSON.stringify(customers));
+  localStorage.setItem('swaggy_visits', JSON.stringify(visits));
+  localStorage.setItem('swaggy_expenses', JSON.stringify(expenses));
+  localStorage.setItem('swaggy_inventory', inventory);
+  localStorage.setItem('swaggy_cost', costPerBag);
+  localStorage.setItem('swaggy_charge', chargePerBag);
+}
+
+// ===== TAB NAVIGATION =====
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  const tabs = ['dashboard','route','inventory','income'];
+  document.querySelectorAll('nav button')[tabs.indexOf(name)].classList.add('active');
+  const fab = document.getElementById('fab-btn');
+  fab.style.display = name === 'dashboard' ? 'flex' : 'none';
+  if (name === 'dashboard') renderDashboard();
+  if (name === 'route') renderRoute();
+  if (name === 'inventory') renderInventory();
+  if (name === 'income') renderIncome();
+}
+
+// ===== HELPERS =====
+function daysUntil(customer) {
+  if (!customer.lastFilled || !customer.interval) return null;
+  const last = new Date(customer.lastFilled);
+  const next = new Date(last.getTime() + customer.interval * 24 * 60 * 60 * 1000);
+  const now = new Date();
+  return Math.round((next - now) / (1000 * 60 * 60 * 24));
+}
+
+function statusColor(days) {
+  if (days === null) return 'green';
+  if (days < 0) return 'red';
+  if (days <= 14) return 'yellow';
+  return 'green';
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return '—';
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function progressPct(days, interval) {
+  if (!interval || days === null) return 100;
+  const pct = Math.max(0, Math.min(100, (days / interval) * 100));
+  return pct;
+}
+
+// ===== DASHBOARD =====
+function renderDashboard() {
+  const red = customers.filter(c => statusColor(daysUntil(c)) === 'red');
+  const yellow = customers.filter(c => statusColor(daysUntil(c)) === 'yellow');
+  const green = customers.filter(c => statusColor(daysUntil(c)) === 'green');
+
+  document.getElementById('stats-grid').innerHTML = `
+    <div class="stat-box">
+      <div class="stat-num">${customers.length}</div>
+      <div class="stat-label">Customers</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--red)">${red.length}</div>
+      <div class="stat-label">Overdue</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" style="color:var(--yellow)">${yellow.length}</div>
+      <div class="stat-label">Due Soon</div>
+    </div>
+  `;
+
+  renderCustomerGroup('customers-red', red, 'red');
+  renderCustomerGroup('customers-yellow', yellow, 'yellow');
+  renderCustomerGroup('customers-green', green, 'green');
+}
+
+function renderCustomerGroup(containerId, list, color) {
+  const container = document.getElementById(containerId);
+  if (!list.length) {
+    container.innerHTML = `<div style="color:#5a7a9a;font-size:0.8rem;font-weight:700;padding:6px 4px;margin-bottom:8px">None</div>`;
+    return;
+  }
+  container.innerHTML = list.map(c => {
+    const days = daysUntil(c);
+    const pct = progressPct(days, c.interval);
+    let badgeText = days === null ? 'No date set' : days < 0 ? `${Math.abs(days)}d overdue` : days === 0 ? 'Due today!' : `${days}d left`;
+    return `
+      <div class="customer-card ${color}" onclick="openDetail('${c.id}')">
+        <div class="customer-header">
+          <div>
+            <div class="customer-name">${c.name}</div>
+            <div class="customer-address">📍 ${c.address || '—'}</div>
+          </div>
+          <div class="countdown-badge ${color}">${badgeText}</div>
+        </div>
+        <div class="customer-details">
+          <div class="detail-chip">🧂 ${c.bags || '?'} bags</div>
+          <div class="detail-chip">📅 Every ${c.interval || '?'}d</div>
+          <div class="detail-chip">${c.payment === 'Cash' ? '💵' : '📱'} ${c.payment || 'Venmo'}</div>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar ${color}" style="width:${pct}%"></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ===== CUSTOMER DETAIL =====
+function openDetail(id) {
+  const c = customers.find(x => x.id === id);
+  if (!c) return;
+  const days = daysUntil(c);
+  const color = statusColor(days);
+  let badgeText = days === null ? 'No date set' : days < 0 ? `${Math.abs(days)} days OVERDUE` : days === 0 ? 'Due TODAY!' : `${days} days left`;
+  const nextDate = c.lastFilled && c.interval ? new Date(new Date(c.lastFilled).getTime() + c.interval * 86400000).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}) : '—';
+
+  const cVisits = visits.filter(v => v.customerId === id).sort((a,b) => new Date(b.date) - new Date(a.date));
+
+  document.getElementById('detail-name').textContent = c.name;
+  document.getElementById('detail-content').innerHTML = `
+    <div style="text-align:center;margin-bottom:16px">
+      <div class="countdown-badge ${color}" style="display:inline-block;font-size:1rem;padding:8px 20px">${badgeText}</div>
+      <div style="font-size:0.8rem;color:#5a7a9a;margin-top:6px">Next service: <strong>${nextDate}</strong></div>
+    </div>
+    ${c.photoData ? `<img src="${c.photoData}" style="width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-bottom:12px">` : ''}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+      <div class="detail-chip" style="justify-content:center;padding:10px">🧂 ${c.bags || '?'} bags/visit</div>
+      <div class="detail-chip" style="justify-content:center;padding:10px">📅 Every ${c.interval || '?'} days</div>
+      <div class="detail-chip" style="justify-content:center;padding:10px">${c.payment === 'Cash' ? '💵' : '📱'} ${c.payment || 'Venmo'}</div>
+      <div class="detail-chip" style="justify-content:center;padding:10px">🗓️ Last: ${formatDate(c.lastFilled)}</div>
+    </div>
+    ${c.softenerLoc ? `<div class="detail-chip" style="margin-bottom:8px">🔧 Softener: ${c.softenerLoc}</div>` : ''}
+    ${c.gate ? `<div class="detail-chip" style="margin-bottom:8px">🔑 ${c.gate}</div>` : ''}
+    ${c.notes ? `<div class="notes-display">📝 ${c.notes}</div>` : ''}
+    <div style="display:flex;gap:8px;margin-top:16px">
+      <button class="btn btn-success" onclick="markServiced('${id}');closeModal('detail-modal')">✓ Mark Serviced</button>
+      <button class="btn btn-secondary" onclick="closeModal('detail-modal');openEditCustomer('${id}')">✏️ Edit</button>
+    </div>
+    ${cVisits.length ? `
+      <div class="visit-log-section">
+        <div class="section-header">📋 Visit History</div>
+        ${cVisits.map(v => `
+          <div class="visit-log-entry">
+            <div class="visit-log-date">${formatDate(v.date)} — ${v.bags} bag${v.bags>1?'s':''}</div>
+            <div class="visit-log-detail">Revenue: $${(v.bags * chargePerBag).toFixed(2)} | Profit: $${(v.bags*(chargePerBag-costPerBag)).toFixed(2)}</div>
+            ${v.photo ? `<img src="${v.photo}" class="visit-photo-thumb" alt="Visit photo">` : ''}
+          </div>
+        `).join('')}
+      </div>
+    ` : ''}
+  `;
+  document.getElementById('detail-modal').classList.add('open');
+}
+
+function markServiced(id) {
+  const c = customers.find(x => x.id === id);
+  if (!c) return;
+  c.lastFilled = new Date().toISOString().split('T')[0];
+  // Log the visit
+  visits.push({
+    id: Date.now().toString(),
+    customerId: id,
+    customerName: c.name,
+    date: c.lastFilled,
+    bags: c.bags || 1,
+    photo: c.photoData || null
+  });
+  inventory = Math.max(0, inventory - (c.bags || 0));
+  save();
+  renderDashboard();
+  renderIncome();
+  renderInventory();
+}
+
+// ===== ADD/EDIT CUSTOMER =====
+function openAddCustomer() {
+  document.getElementById('modal-title-text').textContent = '➕ Add Customer';
+  document.getElementById('c-name').value = '';
+  document.getElementById('c-address').value = '';
+  document.getElementById('c-interval').value = '';
+  document.getElementById('c-bags').value = '';
+  document.getElementById('c-last-filled').value = '';
+  document.getElementById('c-payment').value = 'Venmo';
+  document.getElementById('c-softener-loc').value = '';
+  document.getElementById('c-gate').value = '';
+  document.getElementById('c-notes').value = '';
+  document.getElementById('c-photo').value = '';
+  document.getElementById('c-photo-preview').style.display = 'none';
+  document.getElementById('c-editing-id').value = '';
+  document.getElementById('delete-btn').style.display = 'none';
+  document.getElementById('delete-confirm').style.display = 'none';
+  editingPhotoData = null;
+  document.getElementById('customer-modal').classList.add('open');
+}
+
+function openEditCustomer(id) {
+  const c = customers.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('modal-title-text').textContent = '✏️ Edit Customer';
+  document.getElementById('c-name').value = c.name || '';
+  document.getElementById('c-address').value = c.address || '';
+  document.getElementById('c-interval').value = c.interval || '';
+  document.getElementById('c-bags').value = c.bags || '';
+  document.getElementById('c-last-filled').value = c.lastFilled || '';
+  document.getElementById('c-payment').value = c.payment || 'Venmo';
+  document.getElementById('c-softener-loc').value = c.softenerLoc || '';
+  document.getElementById('c-gate').value = c.gate || '';
+  document.getElementById('c-notes').value = c.notes || '';
+  editingPhotoData = c.photoData || null;
+  if (c.photoData) {
+    document.getElementById('c-photo-preview').src = c.photoData;
+    document.getElementById('c-photo-preview').style.display = 'block';
+  } else {
+    document.getElementById('c-photo-preview').style.display = 'none';
+  }
+  document.getElementById('c-editing-id').value = id;
+  document.getElementById('delete-btn').style.display = 'inline-flex';
+  document.getElementById('delete-confirm').style.display = 'none';
+  document.getElementById('customer-modal').classList.add('open');
+}
+
+function previewPhoto(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      editingPhotoData = e.target.result;
+      document.getElementById('c-photo-preview').src = e.target.result;
+      document.getElementById('c-photo-preview').style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function saveCustomer() {
+  const id = document.getElementById('c-editing-id').value;
+  const data = {
+    name: document.getElementById('c-name').value.trim(),
+    address: document.getElementById('c-address').value.trim(),
+    interval: parseInt(document.getElementById('c-interval').value) || 60,
+    bags: parseInt(document.getElementById('c-bags').value) || 1,
+    lastFilled: document.getElementById('c-last-filled').value,
+    payment: document.getElementById('c-payment').value,
+    softenerLoc: document.getElementById('c-softener-loc').value.trim(),
+    gate: document.getElementById('c-gate').value.trim(),
+    notes: document.getElementById('c-notes').value.trim(),
+    photoData: editingPhotoData || null
+  };
+  if (!data.name) { alert('Please enter a customer name.'); return; }
+  if (id) {
+    const idx = customers.findIndex(x => x.id === id);
+    if (idx > -1) customers[idx] = { ...customers[idx], ...data };
+  } else {
+    data.id = Date.now().toString();
+    customers.push(data);
+  }
+  save();
+  closeModal('customer-modal');
+  renderDashboard();
+  updateIncomeCustomerSelect();
+}
+
+function showDeleteConfirm() {
+  document.getElementById('delete-confirm').style.display = 'block';
+}
+
+function hideDeleteConfirm() {
+  document.getElementById('delete-confirm').style.display = 'none';
+}
+
+function deleteCustomer() {
+  const id = document.getElementById('c-editing-id').value;
+  customers = customers.filter(c => c.id !== id);
+  visits = visits.filter(v => v.customerId !== id);
+  save();
+  closeModal('customer-modal');
+  renderDashboard();
+  updateIncomeCustomerSelect();
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// ===== ROUTE TAB =====
+function renderRoute() {
+  const list = document.getElementById('route-checklist');
+  list.innerHTML = customers.map(c => {
+    const days = daysUntil(c);
+    const color = statusColor(days);
+    const badge = days === null ? '' : days < 0 ? ` 🔴` : days <= 14 ? ` 🟡` : ` 🟢`;
+    return `
+      <div class="route-checkbox-item">
+        <input type="checkbox" id="route-c-${c.id}" value="${c.id}" ${color !== 'green' ? 'checked' : ''}>
+        <label for="route-c-${c.id}" style="margin:0;font-weight:700;font-size:0.9rem;cursor:pointer">
+          ${c.name}${badge}
+          <span style="display:block;font-size:0.72rem;font-weight:600;color:#5a7a9a">${c.address || '—'} · ${c.bags||1} bag${(c.bags||1)>1?'s':''}</span>
+        </label>
+      </div>
+    `;
+  }).join('') || '<div class="empty-state"><div class="empty-icon">👥</div><p>No customers yet. Add some from the Dashboard!</p></div>';
+  document.getElementById('route-result').style.display = 'none';
+}
+
+function autoSelectDue() {
+  document.querySelectorAll('#route-checklist input[type="checkbox"]').forEach(cb => {
+    const c = customers.find(x => x.id === cb.value);
+    const days = c ? daysUntil(c) : null;
+    cb.checked = days === null || days <= 14;
+  });
+}
+
+function selectAll() {
+  document.querySelectorAll('#route-checklist input[type="checkbox"]').forEach(cb => cb.checked = true);
+}
+
+function selectNone() {
+  document.querySelectorAll('#route-checklist input[type="checkbox"]').forEach(cb => cb.checked = false);
+}
+
+function buildRoute() {
+  const checked = [...document.querySelectorAll('#route-checklist input:checked')].map(i => i.value);
+  if (!checked.length) { alert('Select at least one stop!'); return; }
+  let stops = checked.map(id => customers.find(c => c.id === id)).filter(Boolean);
+  // Shane Peery (Orem) always goes last — sort everyone else by distance from Mom's
+  const shane = stops.find(c => c.id === '1');
+  stops = stops.filter(c => c.id !== '1');
+  stops.sort((a, b) => {
+    const distA = (a.lat && a.lng) ? haversine(MOM_LAT, MOM_LNG, a.lat, a.lng) : 999;
+    const distB = (b.lat && b.lng) ? haversine(MOM_LAT, MOM_LNG, b.lat, b.lng) : 999;
+    return distA - distB;
+  });
+  if (shane) stops.push(shane);
+  routeStops = stops;
+  const totalBags = routeStops.reduce((s, c) => s + (c.bags || 1), 0);
+  document.getElementById('route-summary-box').innerHTML = `
+    <div>
+      <div class="route-summary-label">Stops</div>
+      <div class="route-summary-num">${routeStops.length}</div>
+    </div>
+    <div style="text-align:center">
+      <div class="route-summary-label">Total Bags Needed</div>
+      <div class="route-summary-num">${totalBags} 🧂</div>
+    </div>
+    <div style="text-align:right">
+      <div class="route-summary-label">Revenue</div>
+      <div class="route-summary-num">$${(totalBags * chargePerBag).toFixed(0)}</div>
+    </div>
+  `;
+  document.getElementById('route-stops-list').innerHTML = routeStops.map((c, i) => `
+    <div class="route-stop">
+      <div class="stop-num">${i+1}</div>
+      <div class="stop-info">
+        <div class="stop-name">${c.name}</div>
+        <div class="stop-addr">${c.address || '—'}</div>
+        ${c.gate ? `<div class="stop-addr">🔑 ${c.gate}</div>` : ''}
+      </div>
+      <div class="stop-bags">${c.bags||1} bag${(c.bags||1)>1?'s':''}</div>
+    </div>
+  `).join('');
+  document.getElementById('route-result').style.display = 'block';
+}
+
+function openMaps() {
+  if (!routeStops.length) return;
+  const addresses = routeStops.map(c => encodeURIComponent(c.address || c.name));
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  let url;
+  if (isIOS) {
+    if (addresses.length === 1) {
+      url = `maps://?q=${addresses[0]}`;
+    } else {
+      const dest = addresses[addresses.length - 1];
+      const waypoints = addresses.slice(0, -1).join('/');
+      url = `maps://?saddr=Current+Location&daddr=${dest}&waypoints=${waypoints}`;
+    }
+  } else {
+    const origin = 'My+Location';
+    const dest = addresses[addresses.length - 1];
+    const waypoints = addresses.slice(0, -1).join('|');
+    url = `https://www.google.com/maps/dir/${origin}/${waypoints}/${dest}`;
+  }
+  window.open(url, '_blank');
+}
+
+// ===== INVENTORY TAB =====
+function renderInventory() {
+  document.getElementById('inv-count-display').textContent = inventory;
+  document.getElementById('cost-per-bag').value = costPerBag.toFixed(2);
+  document.getElementById('charge-per-bag').value = chargePerBag.toFixed(2);
+
+  // Upcoming needs: customers due in next 30 days
+  const upcoming = customers
+    .map(c => ({ c, days: daysUntil(c) }))
+    .filter(x => x.days !== null && x.days <= 30)
+    .sort((a,b) => a.days - b.days);
+
+  const totalNeeded = upcoming.reduce((s, x) => s + (x.c.bags || 1), 0);
+  const needToBuy = Math.max(0, totalNeeded - inventory);
+
+  document.getElementById('upcoming-needs').innerHTML = upcoming.length ? upcoming.map(({c, days}) => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 4px;border-bottom:1px solid rgba(26,47,94,0.08)">
+      <div>
+        <div style="font-weight:800;font-size:0.88rem">${c.name}</div>
+        <div style="font-size:0.72rem;color:#5a7a9a">${days < 0 ? 'Overdue' : days === 0 ? 'Today' : `In ${days}d`}</div>
+      </div>
+      <div class="detail-chip">${c.bags||1} bag${(c.bags||1)>1?'s':''}</div>
+    </div>
+  `).join('') : '<div style="color:#5a7a9a;font-size:0.85rem;text-align:center;padding:12px">No customers due in the next 30 days 🎉</div>';
+
+  document.getElementById('buy-recommendation').innerHTML = `
+    <div style="margin-bottom:6px">Bags needed (next 30 days): <strong>${totalNeeded}</strong></div>
+    <div style="margin-bottom:6px">Bags in storage: <strong>${inventory}</strong></div>
+    <div style="margin-top:8px;padding:10px;background:${needToBuy > 0 ? '#fdecea' : '#e8f5ee'};border-radius:10px;color:${needToBuy > 0 ? 'var(--red)' : 'var(--green)'}">
+      ${needToBuy > 0 ? `🛒 Buy at least <strong>${needToBuy} bags</strong> before your next route!` : `✅ You have enough bags for the next 30 days!`}
+    </div>
+  `;
+}
+
+function adjustInventory(delta) {
+  inventory = Math.max(0, inventory + delta);
+  save();
+  renderInventory();
+}
+
+function setInventoryManual() {
+  const val = parseInt(document.getElementById('inv-adjust-input').value);
+  if (!isNaN(val) && val >= 0) {
+    inventory = val;
+    document.getElementById('inv-adjust-input').value = '';
+    save();
+    renderInventory();
+  }
+}
+
+function saveCostSettings() {
+  costPerBag = parseFloat(document.getElementById('cost-per-bag').value) || 5.50;
+  chargePerBag = parseFloat(document.getElementById('charge-per-bag').value) || 10.00;
+  save();
+  renderInventory();
+  renderIncome();
+}
+
+// ===== INCOME TAB =====
+function autoFillPayment() {
+  const bags = parseInt(document.getElementById('income-bags').value) || 0;
+  if (bags > 0) document.getElementById('income-paid').value = (bags * chargePerBag).toFixed(2);
+}
+
+function autoFillExpense() {
+  const bags = parseInt(document.getElementById('exp-bags').value) || 0;
+  if (bags > 0) document.getElementById('exp-amount').value = (bags * costPerBag).toFixed(2);
+}
+
+function renderIncome() {
+  updateIncomeCustomerSelect();
+  document.getElementById('income-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('exp-date').value = new Date().toISOString().split('T')[0];
+
+  // Totals
+  const totalBagsDelivered = visits.reduce((s, v) => s + (v.bags || 0), 0);
+  const totalRevenue = visits.reduce((s, v) => s + (v.paid != null ? v.paid : v.bags * chargePerBag), 0);
+  const totalBagsBought = expenses.reduce((s, e) => s + (e.bagsBought || 0), 0);
+  const totalExpenses = expenses.reduce((s, e) => s + (e.amount || 0), 0);
+  const grossProfit = totalRevenue - totalExpenses;
+  const margin = totalRevenue > 0 ? ((grossProfit / totalRevenue) * 100).toFixed(1) : '0.0';
+
+  // Income Statement
+  document.getElementById('income-statement').innerHTML = `
+    <div style="font-family:'Lilita One',cursive;font-size:1rem;color:var(--navy);margin-bottom:14px;text-align:center;letter-spacing:0.5px">Swaggy Salt — Income Statement</div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(26,47,94,0.08)">
+      <span style="font-weight:700;font-size:0.85rem;color:#5a7a9a">Bags Delivered</span>
+      <span style="font-weight:800">${totalBagsDelivered}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(26,47,94,0.08)">
+      <span style="font-weight:700;font-size:0.85rem;color:#5a7a9a">Revenue Collected</span>
+      <span style="font-weight:800;color:var(--green)">+$${totalRevenue.toFixed(2)}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(26,47,94,0.08)">
+      <span style="font-weight:700;font-size:0.85rem;color:#5a7a9a">Bags Purchased</span>
+      <span style="font-weight:800">${totalBagsBought}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:2px solid rgba(26,47,94,0.15)">
+      <span style="font-weight:700;font-size:0.85rem;color:#5a7a9a">Total Expenses</span>
+      <span style="font-weight:800;color:var(--red)">−$${totalExpenses.toFixed(2)}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:12px 0 4px">
+      <span style="font-family:'Lilita One',cursive;font-size:1rem;color:var(--navy)">Net Profit</span>
+      <span style="font-family:'Lilita One',cursive;font-size:1.3rem;color:${grossProfit >= 0 ? 'var(--green)' : 'var(--red)'}">$${grossProfit.toFixed(2)}</span>
+    </div>
+    <div style="text-align:right;font-size:0.75rem;color:#5a7a9a;font-weight:700">Profit margin: ${margin}%</div>
+  `;
+
+  // Visit history
+  const sortedVisits = [...visits].sort((a,b) => new Date(b.date) - new Date(a.date));
+  document.getElementById('visit-history-list').innerHTML = sortedVisits.length ? sortedVisits.map(v => {
+    const paid = v.paid != null ? v.paid : v.bags * chargePerBag;
+    return `
+    <div class="log-entry">
+      <div class="log-entry-left">
+        <div class="log-name">${v.customerName}</div>
+        <div class="log-date">${formatDate(v.date)} · ${v.bags} bag${v.bags>1?'s':''} · ${v.payMethod || 'Venmo'}</div>
+      </div>
+      <div class="log-amount">+$${paid.toFixed(2)}</div>
+    </div>`;
+  }).join('') : '<div class="empty-state"><div class="empty-icon">📋</div><p>No visits logged yet.</p></div>';
+
+  // Expense history
+  const sortedExp = [...expenses].sort((a,b) => new Date(b.date) - new Date(a.date));
+  document.getElementById('expense-history-list').innerHTML = sortedExp.length ? sortedExp.map(e => `
+    <div class="log-entry">
+      <div class="log-entry-left">
+        <div class="log-name">${e.desc || 'Expense'}</div>
+        <div class="log-date">${formatDate(e.date)}${e.bagsBought ? ` · ${e.bagsBought} bags bought` : ''}</div>
+      </div>
+      <div class="log-amount" style="color:var(--red)">−$${(e.amount||0).toFixed(2)}</div>
+    </div>
+  `).join('') : '<div class="empty-state"><div class="empty-icon">🧾</div><p>No expenses logged yet.</p></div>';
+}
+
+function updateIncomeCustomerSelect() {
+  const sel = document.getElementById('income-customer-select');
+  sel.innerHTML = customers.map(c => `<option value="${c.id}">${c.name}</option>`).join('') ||
+    '<option value="">— No customers yet —</option>';
+}
+
+function logVisit() {
+  const customerId = document.getElementById('income-customer-select').value;
+  const bags = parseInt(document.getElementById('income-bags').value);
+  const date = document.getElementById('income-date').value;
+  const paid = parseFloat(document.getElementById('income-paid').value);
+  const payMethod = document.getElementById('income-pay-method').value;
+  if (!customerId || !bags || !date) { alert('Please fill in customer, bags, and date.'); return; }
+  const c = customers.find(x => x.id === customerId);
+  visits.push({
+    id: Date.now().toString(),
+    customerId,
+    customerName: c ? c.name : 'Unknown',
+    date,
+    bags,
+    paid: isNaN(paid) ? bags * chargePerBag : paid,
+    payMethod,
+    photo: null
+  });
+  if (c) {
+    c.lastFilled = date;
+    inventory = Math.max(0, inventory - bags);
+  }
+  document.getElementById('income-bags').value = '';
+  document.getElementById('income-paid').value = '';
+  save();
+  renderIncome();
+  renderInventory();
+}
+
+function logExpense() {
+  const desc = document.getElementById('exp-desc').value.trim() || 'Expense';
+  const date = document.getElementById('exp-date').value;
+  const bagsBought = parseInt(document.getElementById('exp-bags').value) || 0;
+  const amount = parseFloat(document.getElementById('exp-amount').value);
+  if (!date || isNaN(amount)) { alert('Please fill in date and amount.'); return; }
+  expenses.push({ id: Date.now().toString(), desc, date, bagsBought, amount });
+  if (bagsBought > 0) inventory += bagsBought;
+  document.getElementById('exp-desc').value = '';
+  document.getElementById('exp-bags').value = '';
+  document.getElementById('exp-amount').value = '';
+  save();
+  renderIncome();
+  renderInventory();
+}
+
+// ===== INIT =====
+renderDashboard();
+updateIncomeCustomerSelect();
+</script>
+</body>
+</html>
